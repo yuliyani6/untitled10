@@ -38,7 +38,30 @@ dependencies {
     testImplementation 'org.junit.vintage:junit-vintage-engine:5.10.0'
     testImplementation 'org.hamcrest:hamcrest:2.2'
     testImplementation 'io.github.bonigarcia:webdrivermanager:5.8.0'}
-
 test {
-    useJUnitPlatform()
+    useJUnit()
+    // Filter tag via command-line or GitHub Actions
+    systemProperty("cucumber.filter.tags", System.getProperty("cucumber.filter.tags"))
+
+    testLogging {
+        events "passed", "skipped", "failed"
+    }
+
+    // Agar tetap generate report meskipun test gagal
+    ignoreFailures = true
 }
+
+// 📌 Tambahkan setelah blok test {} di atas
+tasks.register('copyAllReports', Copy) {
+    from("target/web") {
+        include 'cucumber-html-report.html', 'cucumber-report.json'
+    }
+    from("target/cucumber-reports/api") {
+        include "cucumber-reports-api-test.html"
+    }
+
+    into("${buildDir}/reports/final-cucumber-report")
+
+}
+
+test.finalizedBy(copyAllReports)
