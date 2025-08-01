@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="Checkout End-to-End Flow" tests="1" skipped="0" failures="0" errors="0" timestamp="2025-08-01T07:37:24" hostname="LAPTOP-KNP6RUNT" time="3.649">
+  <properties/>
+  <testcase name="End-to-end checkout" classname="Checkout End-to-End Flow" time="3.649"/>
+  <system-out><![CDATA[
+@web @checkout @endtoend
+Scenario: End-to-end checkout                                                 # src/test/resources/features/web/checkout.feature:5
+  Given User is logged in with valid credentials                              # web.steps.LoginSteps.user_logged_in()
+  And User adds "Sauce Labs Bolt T-Shirt" to the cart                         # web.steps.CartSteps.user_adds_item(java.lang.String)
+  When User navigates to the cart page                                        # web.steps.CartSteps.user_navigates_to_cart()
+  And User clicks the checkout button                                         # web.steps.CheckoutSteps.user_clicks_checkout()
+  And User enters first name "John", last name "Doe", and postal code "12345" # web.steps.CheckoutSteps.user_enters_checkout_info(java.lang.String,java.lang.String,java.lang.String)
+  And User clicks the continue button                                         # web.steps.CheckoutSteps.user_clicks_continue()
+  And User clicks the finish button                                           # web.steps.CheckoutSteps.user_clicks_finish()
+  Then User should see the confirmation message "Thank you for your order!"   # web.steps.CheckoutSteps.user_sees_confirmation(java.lang.String)
+]]></system-out>
+  <system-err><![CDATA[Aug 01, 2025 2:37:25 PM org.openqa.selenium.devtools.CdpVersionFinder findNearestMatch
+WARNING: Unable to find CDP implementation matching 138
+Aug 01, 2025 2:37:25 PM org.openqa.selenium.chromium.ChromiumDriver lambda$new$5
+WARNING: Unable to find version of CDP to use for 138.0.7204.184. You may need to include a dependency on a specific version of the CDP using something similar to `org.seleniumhq.selenium:selenium-devtools-v86:4.11.0` where the version ("v86") matches the version of the chromium-based browser you're using and the version number of the artifact is the same as Selenium's.
+]]></system-err>
+</testsuite>
