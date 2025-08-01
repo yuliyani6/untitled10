@@ -15,7 +15,7 @@ public class Hooks {
 
         // Deteksi OS Windows, hanya gunakan user-data-dir di laptop pribadi
         if (System.getProperty("os.name").toLowerCase().contains("win")) {
-            options.addArguments("--user-data-dir=C:/Users/YOUR_USERNAME/AppData/Local/Google/Chrome/User Data");
+            options.addArguments("--user-data-dir=C:/Users/Asus Vivobook/AppData/Local/Google/Chrome/User Data");
         }
 
         // Supaya bisa jalan di GitHub Actions
