@@ -1,42 +1,150 @@
 
-@api @api
-ìScenario: Create a new user                                                                       # src/test/resources/features/api/api.feature:4
-É[DEBUG] Request Body: {"firstName": "Yuliyani", "lastName": "Aprilyani", "email": "yuliyani.aprilyani1754060383604@example.com" }
-Ï[DEBUG] Response: {"id":"688cd6611c9ef4f2f615be42","firstName":"Yuliyani","lastName":"Aprilyani","email":"yuliyani.aprilyani1754060383604@example.com","registerDate":"2025-08-01T14:59:45.899Z","updatedDate":"2025-08-01T14:59:45.899Z"}
-[DEBUG] Status Code: 200
-4[CREATE] User ID Created: 688cd6611c9ef4f2f615be42
-∑  Given I have user details with first name "Yuliyani", last name "Aprilyani", and a unique email # api.steps.UserStepDefinitions.iHaveUserDetails(java.lang.String,java.lang.String)
-Ï[DEBUG] Create User Response: {"id":"688cd6631c9ef4933d15be45","firstName":"Bintang","lastName":"Bersinar","email":"bintang.1754060386803@example.com","registerDate":"2025-08-01T14:59:47.198Z","updatedDate":"2025-08-01T14:59:47.198Z"}
-¢  When I send a request to create the user                                                        # api.steps.UserStepDefinitions.iSendARequestToCreateTheUser()
-:[SUCCESS] User Created with ID: 688cd6631c9ef4933d15be45
-®  Then the user should be created successfully                                                    # api.steps.UserStepDefinitions.theUserShouldBeCreatedSuccessfully()
+@web @cart @positive
+eScenario: Add item to cart                         # src/test/resources/features/web/cart.feature:5
+Ö      org.openqa.selenium.SessionNotCreatedException: Could not start a new session. Response code 500. Message: session not created
+=from unknown error: cannot create default profile directory 
+8Host info: host: 'LAPTOP-KNP6RUNT', ip: '192.168.1.102'
+6Build info: version: '4.11.0', revision: '040bc5406b'
+bSystem info: os.name: 'Windows 11', os.arch: 'amd64', os.version: '10.0', java.version: '17.0.15'
+5Driver info: org.openqa.selenium.chrome.ChromeDriver
+éCommand: [null, newSession {capabilities=[Capabilities {browserName: chrome, goog:chromeOptions: {args: [--remote-allow-origins=*, --user-data-dir=C:/Users/YO..., --headless=new, --disable-gpu, --no-sandbox], binary: C:\Program Files\Google\Chr..., extensions: []}}]}]
+\	at org.openqa.selenium.remote.ProtocolHandshake.createSession(ProtocolHandshake.java:140)
+[	at org.openqa.selenium.remote.ProtocolHandshake.createSession(ProtocolHandshake.java:96)
+[	at org.openqa.selenium.remote.ProtocolHandshake.createSession(ProtocolHandshake.java:68)
+Z	at org.openqa.selenium.remote.HttpCommandExecutor.execute(HttpCommandExecutor.java:163)
+l	at org.openqa.selenium.remote.service.DriverCommandExecutor.invokeExecute(DriverCommandExecutor.java:196)
+f	at org.openqa.selenium.remote.service.DriverCommandExecutor.execute(DriverCommandExecutor.java:171)
+R	at org.openqa.selenium.remote.RemoteWebDriver.execute(RemoteWebDriver.java:518)
+W	at org.openqa.selenium.remote.RemoteWebDriver.startSession(RemoteWebDriver.java:232)
+Q	at org.openqa.selenium.remote.RemoteWebDriver.<init>(RemoteWebDriver.java:159)
+Q	at org.openqa.selenium.chromium.ChromiumDriver.<init>(ChromiumDriver.java:108)
+J	at org.openqa.selenium.chrome.ChromeDriver.<init>(ChromeDriver.java:88)
+J	at org.openqa.selenium.chrome.ChromeDriver.<init>(ChromeDriver.java:83)
+J	at org.openqa.selenium.chrome.ChromeDriver.<init>(ChromeDriver.java:72)
+*	at web.hooks.Hooks.setUp(Hooks.java:26)
+
+\  Given User is logged in with valid credentials   # web.steps.LoginSteps.user_logged_in()
+k  When User adds "Sauce Labs Backpack" to the cart # web.steps.CartSteps.user_adds_item(java.lang.String)
+c  And User navigates to the cart page              # web.steps.CartSteps.user_navigates_to_cart()
+s  Then "Sauce Labs Backpack" should be in the cart # web.steps.CartSteps.item_should_be_in_cart(java.lang.String)
 
-@api @api
-eScenario: Get user by ID                           # src/test/resources/features/api/api.feature:11
-3[CHECK] Current User ID: 688cd6631c9ef4933d15be45
-j  Given I have the saved user ID                   # api.steps.UserStepDefinitions.iHaveTheSavedUserID()
-M[GET] Request to: https://dummyapi.io/data/v1/user/688cd6631c9ef4933d15be45
-y  When I send a GET request to "/user/{id}"        # api.steps.UserStepDefinitions.iSendAGETRequestTo(java.lang.String)
-s  Then the response status should be 200           # api.steps.UserStepDefinitions.theResponseStatusShouldBe(int)
-}  And the response should contain the user details # api.steps.UserStepDefinitions.theResponseShouldContainTheUserDetails()
-
-@api @api
-mScenario: Update the created user                          # src/test/resources/features/api/api.feature:18
-s  Given I have a valid user ID                             # api.steps.UserStepDefinitions.i_have_valid_user_id()
-ê  When I send a PUT request to update the user with:       # api.steps.UserStepDefinitions.i_send_put_request(io.cucumber.datatable.DataTable)
-6    | firstName | Michael                           |
-6    | lastName  | Douglas                           |
-6    | email     | yuliyani1753791450408@example.com |
-u  Then the response status code should be 200              # api.steps.UserStepDefinitions.verify_put_status_code()
-z  And the response should contain the updated user details # api.steps.UserStepDefinitions.verify_updated_user_details()
-
-@api @api
-aScenario: Delete user                          # src/test/resources/features/api/api.feature:28
-3[CHECK] Current User ID: 688cd6631c9ef4933d15be45
-f  Given I have the saved user ID               # api.steps.UserStepDefinitions.iHaveTheSavedUserID()
-P[DELETE] Request to: https://dummyapi.io/data/v1/user/688cd6631c9ef4933d15be45
-<[DEBUG] Delete Response: {"id":"688cd6631c9ef4933d15be45"}
-x  When I send a DELETE request to "/user/{id}" # api.steps.UserStepDefinitions.iSendADELETERequestTo(java.lang.String)
-o  Then the response status should be 200       # api.steps.UserStepDefinitions.theResponseStatusShouldBe(int)
-$[CHECK] User successfully deleted.
-m  And the user should no longer exist          # api.steps.UserStepDefinitions.theUserShouldNoLongerExist()
+@web @cart @positive
+lScenario: Remove item from cart                          # src/test/resources/features/web/cart.feature:12
+Ö      org.openqa.selenium.SessionNotCreatedException: Could not start a new session. Response code 500. Message: session not created
+=from unknown error: cannot create default profile directory 
+8Host info: host: 'LAPTOP-KNP6RUNT', ip: '192.168.1.102'
+6Build info: version: '4.11.0', revision: '040bc5406b'
+bSystem info: os.name: 'Windows 11', os.arch: 'amd64', os.version: '10.0', java.version: '17.0.15'
+5Driver info: org.openqa.selenium.chrome.ChromeDriver
+éCommand: [null, newSession {capabilities=[Capabilities {browserName: chrome, goog:chromeOptions: {args: [--remote-allow-origins=*, --user-data-dir=C:/Users/YO..., --headless=new, --disable-gpu, --no-sandbox], binary: C:\Program Files\Google\Chr..., extensions: []}}]}]
+\	at org.openqa.selenium.remote.ProtocolHandshake.createSession(ProtocolHandshake.java:140)
+[	at org.openqa.selenium.remote.ProtocolHandshake.createSession(ProtocolHandshake.java:96)
+[	at org.openqa.selenium.remote.ProtocolHandshake.createSession(ProtocolHandshake.java:68)
+Z	at org.openqa.selenium.remote.HttpCommandExecutor.execute(HttpCommandExecutor.java:163)
+l	at org.openqa.selenium.remote.service.DriverCommandExecutor.invokeExecute(DriverCommandExecutor.java:196)
+f	at org.openqa.selenium.remote.service.DriverCommandExecutor.execute(DriverCommandExecutor.java:171)
+R	at org.openqa.selenium.remote.RemoteWebDriver.execute(RemoteWebDriver.java:518)
+W	at org.openqa.selenium.remote.RemoteWebDriver.startSession(RemoteWebDriver.java:232)
+Q	at org.openqa.selenium.remote.RemoteWebDriver.<init>(RemoteWebDriver.java:159)
+Q	at org.openqa.selenium.chromium.ChromiumDriver.<init>(ChromiumDriver.java:108)
+J	at org.openqa.selenium.chrome.ChromeDriver.<init>(ChromeDriver.java:88)
+J	at org.openqa.selenium.chrome.ChromeDriver.<init>(ChromeDriver.java:83)
+J	at org.openqa.selenium.chrome.ChromeDriver.<init>(ChromeDriver.java:72)
+*	at web.hooks.Hooks.setUp(Hooks.java:26)
+
+b  Given User is logged in with valid credentials         # web.steps.LoginSteps.user_logged_in()
+q  And User adds "Sauce Labs Bike Light" to the cart      # web.steps.CartSteps.user_adds_item(java.lang.String)
+i  When User navigates to the cart page                   # web.steps.CartSteps.user_navigates_to_cart()
+t  And User removes "Sauce Labs Bike Light" from the cart # web.steps.CartSteps.user_removes_item(java.lang.String)
+}  Then "Sauce Labs Bike Light" should not be in the cart # web.steps.CartSteps.item_should_not_be_in_cart(java.lang.String)
+
+@web @checkout @endtoend
+ÑScenario: End-to-end checkout                                                 # src/test/resources/features/web/checkout.feature:5
+Ö      org.openqa.selenium.SessionNotCreatedException: Could not start a new session. Response code 500. Message: session not created
+=from unknown error: cannot create default profile directory 
+8Host info: host: 'LAPTOP-KNP6RUNT', ip: '192.168.1.102'
+6Build info: version: '4.11.0', revision: '040bc5406b'
+bSystem info: os.name: 'Windows 11', os.arch: 'amd64', os.version: '10.0', java.version: '17.0.15'
+5Driver info: org.openqa.selenium.chrome.ChromeDriver
+éCommand: [null, newSession {capabilities=[Capabilities {browserName: chrome, goog:chromeOptions: {args: [--remote-allow-origins=*, --user-data-dir=C:/Users/YO..., --headless=new, --disable-gpu, --no-sandbox], binary: C:\Program Files\Google\Chr..., extensions: []}}]}]
+\	at org.openqa.selenium.remote.ProtocolHandshake.createSession(ProtocolHandshake.java:140)
+[	at org.openqa.selenium.remote.ProtocolHandshake.createSession(ProtocolHandshake.java:96)
+[	at org.openqa.selenium.remote.ProtocolHandshake.createSession(ProtocolHandshake.java:68)
+Z	at org.openqa.selenium.remote.HttpCommandExecutor.execute(HttpCommandExecutor.java:163)
+l	at org.openqa.selenium.remote.service.DriverCommandExecutor.invokeExecute(DriverCommandExecutor.java:196)
+f	at org.openqa.selenium.remote.service.DriverCommandExecutor.execute(DriverCommandExecutor.java:171)
+R	at org.openqa.selenium.remote.RemoteWebDriver.execute(RemoteWebDriver.java:518)
+W	at org.openqa.selenium.remote.RemoteWebDriver.startSession(RemoteWebDriver.java:232)
+Q	at org.openqa.selenium.remote.RemoteWebDriver.<init>(RemoteWebDriver.java:159)
+Q	at org.openqa.selenium.chromium.ChromiumDriver.<init>(ChromiumDriver.java:108)
+J	at org.openqa.selenium.chrome.ChromeDriver.<init>(ChromeDriver.java:88)
+J	at org.openqa.selenium.chrome.ChromeDriver.<init>(ChromeDriver.java:83)
+J	at org.openqa.selenium.chrome.ChromeDriver.<init>(ChromeDriver.java:72)
+*	at web.hooks.Hooks.setUp(Hooks.java:26)
+
+w  Given User is logged in with valid credentials                              # web.steps.LoginSteps.user_logged_in()
+Ü  And User adds "Sauce Labs Bolt T-Shirt" to the cart                         # web.steps.CartSteps.user_adds_item(java.lang.String)
+~  When User navigates to the cart page                                        # web.steps.CartSteps.user_navigates_to_cart()
+Ä  And User clicks the checkout button                                         # web.steps.CheckoutSteps.user_clicks_checkout()
+∑  And User enters first name "John", last name "Doe", and postal code "12345" # web.steps.CheckoutSteps.user_enters_checkout_info(java.lang.String,java.lang.String,java.lang.String)
+Ä  And User clicks the continue button                                         # web.steps.CheckoutSteps.user_clicks_continue()
+~  And User clicks the finish button                                           # web.steps.CheckoutSteps.user_clicks_finish()
+í  Then User should see the confirmation message "Thank you for your order!"   # web.steps.CheckoutSteps.user_sees_confirmation(java.lang.String)
+
+@web @login @positive
+{Scenario: Login with valid credentials                                  # src/test/resources/features/web/login.feature:5
+Ö      org.openqa.selenium.SessionNotCreatedException: Could not start a new session. Response code 500. Message: session not created
+=from unknown error: cannot create default profile directory 
+8Host info: host: 'LAPTOP-KNP6RUNT', ip: '192.168.1.102'
+6Build info: version: '4.11.0', revision: '040bc5406b'
+bSystem info: os.name: 'Windows 11', os.arch: 'amd64', os.version: '10.0', java.version: '17.0.15'
+5Driver info: org.openqa.selenium.chrome.ChromeDriver
+éCommand: [null, newSession {capabilities=[Capabilities {browserName: chrome, goog:chromeOptions: {args: [--remote-allow-origins=*, --user-data-dir=C:/Users/YO..., --headless=new, --disable-gpu, --no-sandbox], binary: C:\Program Files\Google\Chr..., extensions: []}}]}]
+\	at org.openqa.selenium.remote.ProtocolHandshake.createSession(ProtocolHandshake.java:140)
+[	at org.openqa.selenium.remote.ProtocolHandshake.createSession(ProtocolHandshake.java:96)
+[	at org.openqa.selenium.remote.ProtocolHandshake.createSession(ProtocolHandshake.java:68)
+Z	at org.openqa.selenium.remote.HttpCommandExecutor.execute(HttpCommandExecutor.java:163)
+l	at org.openqa.selenium.remote.service.DriverCommandExecutor.invokeExecute(DriverCommandExecutor.java:196)
+f	at org.openqa.selenium.remote.service.DriverCommandExecutor.execute(DriverCommandExecutor.java:171)
+R	at org.openqa.selenium.remote.RemoteWebDriver.execute(RemoteWebDriver.java:518)
+W	at org.openqa.selenium.remote.RemoteWebDriver.startSession(RemoteWebDriver.java:232)
+Q	at org.openqa.selenium.remote.RemoteWebDriver.<init>(RemoteWebDriver.java:159)
+Q	at org.openqa.selenium.chromium.ChromiumDriver.<init>(ChromiumDriver.java:108)
+J	at org.openqa.selenium.chrome.ChromeDriver.<init>(ChromeDriver.java:88)
+J	at org.openqa.selenium.chrome.ChromeDriver.<init>(ChromeDriver.java:83)
+J	at org.openqa.selenium.chrome.ChromeDriver.<init>(ChromeDriver.java:72)
+*	at web.hooks.Hooks.setUp(Hooks.java:26)
+
+x  Given User is on the Saucedemo login page                             # web.steps.LoginSteps.user_is_on_login_page()
+õ  When User enters username "standard_user" and password "secret_sauce" # web.steps.LoginSteps.user_enters_credentials(java.lang.String,java.lang.String)
+{  And User clicks the login button                                      # web.steps.LoginSteps.user_clicks_login_button()
+Å  Then User should be redirected to the inventory page                  # web.steps.LoginSteps.user_should_see_inventory_page()
+
+@web @login @negative
+~Scenario: Login with invalid password                                     # src/test/resources/features/web/login.feature:12
+Ö      org.openqa.selenium.SessionNotCreatedException: Could not start a new session. Response code 500. Message: session not created
+=from unknown error: cannot create default profile directory 
+8Host info: host: 'LAPTOP-KNP6RUNT', ip: '192.168.1.102'
+6Build info: version: '4.11.0', revision: '040bc5406b'
+bSystem info: os.name: 'Windows 11', os.arch: 'amd64', os.version: '10.0', java.version: '17.0.15'
+5Driver info: org.openqa.selenium.chrome.ChromeDriver
+éCommand: [null, newSession {capabilities=[Capabilities {browserName: chrome, goog:chromeOptions: {args: [--remote-allow-origins=*, --user-data-dir=C:/Users/YO..., --headless=new, --disable-gpu, --no-sandbox], binary: C:\Program Files\Google\Chr..., extensions: []}}]}]
+\	at org.openqa.selenium.remote.ProtocolHandshake.createSession(ProtocolHandshake.java:140)
+[	at org.openqa.selenium.remote.ProtocolHandshake.createSession(ProtocolHandshake.java:96)
+[	at org.openqa.selenium.remote.ProtocolHandshake.createSession(ProtocolHandshake.java:68)
+Z	at org.openqa.selenium.remote.HttpCommandExecutor.execute(HttpCommandExecutor.java:163)
+l	at org.openqa.selenium.remote.service.DriverCommandExecutor.invokeExecute(DriverCommandExecutor.java:196)
+f	at org.openqa.selenium.remote.service.DriverCommandExecutor.execute(DriverCommandExecutor.java:171)
+R	at org.openqa.selenium.remote.RemoteWebDriver.execute(RemoteWebDriver.java:518)
+W	at org.openqa.selenium.remote.RemoteWebDriver.startSession(RemoteWebDriver.java:232)
+Q	at org.openqa.selenium.remote.RemoteWebDriver.<init>(RemoteWebDriver.java:159)
+Q	at org.openqa.selenium.chromium.ChromiumDriver.<init>(ChromiumDriver.java:108)
+J	at org.openqa.selenium.chrome.ChromeDriver.<init>(ChromeDriver.java:88)
+J	at org.openqa.selenium.chrome.ChromeDriver.<init>(ChromeDriver.java:83)
+J	at org.openqa.selenium.chrome.ChromeDriver.<init>(ChromeDriver.java:72)
+*	at web.hooks.Hooks.setUp(Hooks.java:26)
+
+z  Given User is on the Saucedemo login page                               # web.steps.LoginSteps.user_is_on_login_page()
+ù  When User enters username "standard_user" and password "wrong_password" # web.steps.LoginSteps.user_enters_credentials(java.lang.String,java.lang.String)
+}  And User clicks the login button                                        # web.steps.LoginSteps.user_clicks_login_button()
+Ü  Then An error message should be displayed                               # web.steps.LoginSteps.error_message_should_be_displayed()
