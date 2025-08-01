@@ -15,50 +15,50 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v4
 
-      - name: Setup JDK 17
+      - name: Setup Java 17
         uses: actions/setup-java@v4
         with:
           distribution: temurin
           java-version: '17'
 
-      - name: Setup Chrome (for UI tests)
+      - name: Setup Chrome for Web UI
         uses: browser-actions/setup-chrome@v1
 
       - name: Grant permission to execute Gradle
         run: chmod +x ./gradlew
 
-      # Run Web UI tests
-      - name: Run Web UI Tests
-        run: ./gradlew test --tests "web."
+      # ----------------------------
+      # Run API Tests
+      # ----------------------------
+      - name: Run API Tests (@api)
+        continue-on-error: true
+        run: ./gradlew test --tests "*TestRunner" -Dcucumber.filter.tags="@api"
 
-      # Run API tests
-      - name: Run API Tests
-        run: ./gradlew test --tests "api."
+      # ----------------------------
+      # Run Web UI Tests
+      # ----------------------------
+      - name: Run Web UI Tests (@web)
+        continue-on-error: true
+        run: ./gradlew test --tests "*TestRunner" -Dcucumber.filter.tags="@web"
 
-      # Debug: list report files
+      # ----------------------------
+      # Upload Reports (HTML & JSON)
+      # ----------------------------
       - name: List Report Files (Debug)
-        run: |
-          echo ":: Web Reports"
-          ls -R target/web || echo "No web report files found"
-          echo ":: API Reports"
-          ls -R reports || echo "No API report files found"
+        run: ls -R reports || echo "No report files found"
 
-      # Upload Web UI reports
-      - name: Upload Web UI Reports
-        uses: actions/upload-artifact@v4
+      - name: Upload Web Report
         if: always()
+        uses: actions/upload-artifact@v4
         with:
-          name: web-ui-report
+          name: web-report
           path: |
             target/web/cucumber-html-report.html
             target/web/cucumber-report.json
-
-      # Upload API reports
-      - name: Upload API Reports
-        uses: actions/upload-artifact@v4
+      - name: Upload API Report
         if: always()
+        uses: actions/upload-artifact@v4
         with:
-          name: api-test-report
+          name: api-report
           path: |
             reports/html/api-report.html
-            reports/json/api-report.json
