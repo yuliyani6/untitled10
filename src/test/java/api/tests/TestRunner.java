@@ -1,17 +1,20 @@
 package api.tests;
 
-import io.cucumber.junit.platform.engine.Constants;
-import org.junit.platform.suite.api.ConfigurationParameter;
-import org.junit.platform.suite.api.IncludeEngines;
-import org.junit.platform.suite.api.SelectClasspathResource;
-import org.junit.platform.suite.api.Suite;
+import org.junit.runner.RunWith;
+import io.cucumber.junit.Cucumber;
+import io.cucumber.junit.CucumberOptions;
 
-@Suite
-@IncludeEngines("Cucumber")
-@SelectClasspathResource("features/api")
-@ConfigurationParameter(key = Constants.FILTER_TAGS_PROPERTY_NAME, value = "@api")
-@ConfigurationParameter(key = Constants.GLUE_PROPERTY_NAME, value = "api.stepdefinitions")
-@ConfigurationParameter(key = Constants.PLUGIN_PROPERTY_NAME, value = "pretty, html:target/cucumber-reports/api/cucumber-reports-api-test.html")
-
+@RunWith(Cucumber.class)
+@CucumberOptions(
+        features = "src/test/resources/features/api", // sesuaikan path feature kamu
+        glue = {"api.steps"},                         // package tempat step definitions
+        plugin = {
+                "pretty",
+                "html:reports/html/api-report.html",
+                "json:reports/json/api-report.json"
+        },
+        monochrome = true,
+        tags = "@api" // opsional, bisa dihapus kalau mau jalanin semua
+)
 public class TestRunner {
 }

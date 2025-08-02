@@ -6,7 +6,15 @@ Feature: Dummy API
     When I send a request to create the user
     Then the user should be created successfully
 
-
+  @api
+  Scenario: Update the created user
+    Given I have a valid user ID
+    When I send a PUT request to update the user with:
+      | firstName |    Park Jongseong                 |
+      | lastName  |   (Jeyyi)                 |
+      | email     |  park.jeyi1754139734430@example.com|
+    Then the response status code should be 200
+    And the response should contain the updated user details
   @api
   Scenario: Get user by ID
     Given I have the saved user ID
