@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="Dummy API" tests="5" skipped="0" failures="0" errors="0" timestamp="2025-08-02T13:26:46" hostname="LAPTOP-KNP6RUNT" time="9.02">
+  <properties/>
+  <testcase name="Create a new user" classname="Dummy API" time="3.656"/>
+  <testcase name="Update the created user #1" classname="Dummy API" time="0.869"/>
+  <testcase name="Get user by ID" classname="Dummy API" time="0.676"/>
+  <testcase name="Update the created user #2" classname="Dummy API" time="0.775"/>
+  <testcase name="Delete user" classname="Dummy API" time="3.044"/>
+  <system-out><![CDATA[
+@api @api
+Scenario: Create a new user                                                                       # src/test/resources/features/api/api.feature:4
+[DEBUG] Request Body: {"firstName": "Yuliyani", "lastName": "Aprilyani", "email": "yuliyani.aprilyani1754141206348@example.com" }
+[DEBUG] Response: {"id":"688e12192121b24cecad870c","firstName":"Yuliyani","lastName":"Aprilyani","email":"yuliyani.aprilyani1754141206348@example.com","registerDate":"2025-08-02T13:26:49.232Z","updatedDate":"2025-08-02T13:26:49.232Z"}
+[DEBUG] Status Code: 200
+[CREATE] User ID Created: 688e12192121b24cecad870c
+  Given I have user details with first name "Yuliyani", last name "Aprilyani", and a unique email # api.steps.UserStepDefinitions.iHaveUserDetails(java.lang.String,java.lang.String)
+[DEBUG] Create User Response: {"id":"688e121a2121b26d47ad870f","firstName":"Bintang","lastName":"Bersinar","email":"bintang.1754141209287@example.com","registerDate":"2025-08-02T13:26:50.647Z","updatedDate":"2025-08-02T13:26:50.647Z"}
+  When I send a request to create the user                                                        # api.steps.UserStepDefinitions.iSendARequestToCreateTheUser()
+[SUCCESS] User Created with ID: 688e121a2121b26d47ad870f
+  Then the user should be created successfully                                                    # api.steps.UserStepDefinitions.theUserShouldBeCreatedSuccessfully()
+
+@api @api
+Scenario: Update the created user                          # src/test/resources/features/api/api.feature:10
+  Given I have a valid user ID                             # api.steps.UserStepDefinitions.i_have_valid_user_id()
+  When I send a PUT request to update the user with:       # api.steps.UserStepDefinitions.i_send_put_request(io.cucumber.datatable.DataTable)
+    | firstName | Park Jongseong                     |
+    | lastName  | (Jeyyi)                            |
+    | email     | park.jeyi1754139734430@example.com |
+  Then the response status code should be 200              # api.steps.UserStepDefinitions.verify_put_status_code()
+  And the response should contain the updated user details # api.steps.UserStepDefinitions.verify_updated_user_details()
+
+@api @api
+Scenario: Get user by ID                           # src/test/resources/features/api/api.feature:19
+[CHECK] Current User ID: 688e121a2121b26d47ad870f
+  Given I have the saved user ID                   # api.steps.UserStepDefinitions.iHaveTheSavedUserID()
+[GET] Request to: https://dummyapi.io/data/v1/user/688e121a2121b26d47ad870f
+  When I send a GET request to "/user/{id}"        # api.steps.UserStepDefinitions.iSendAGETRequestTo(java.lang.String)
+  Then the response status should be 200           # api.steps.UserStepDefinitions.theResponseStatusShouldBe(int)
+  And the response should contain the user details # api.steps.UserStepDefinitions.theResponseShouldContainTheUserDetails()
+
+@api @api
+Scenario: Update the created user                          # src/test/resources/features/api/api.feature:26
+  Given I have a valid user ID                             # api.steps.UserStepDefinitions.i_have_valid_user_id()
+  When I send a PUT request to update the user with:       # api.steps.UserStepDefinitions.i_send_put_request(io.cucumber.datatable.DataTable)
+    | firstName | Michael                           |
+    | lastName  | Douglas                           |
+    | email     | yuliyani1753791450408@example.com |
+  Then the response status code should be 200              # api.steps.UserStepDefinitions.verify_put_status_code()
+  And the response should contain the updated user details # api.steps.UserStepDefinitions.verify_updated_user_details()
+
+@api @api
+Scenario: Delete user                          # src/test/resources/features/api/api.feature:36
+[CHECK] Current User ID: 688e121a2121b26d47ad870f
+  Given I have the saved user ID               # api.steps.UserStepDefinitions.iHaveTheSavedUserID()
+[DELETE] Request to: https://dummyapi.io/data/v1/user/688e121a2121b26d47ad870f
+[DEBUG] Delete Response: {"id":"688e121a2121b26d47ad870f"}
+  When I send a DELETE request to "/user/{id}" # api.steps.UserStepDefinitions.iSendADELETERequestTo(java.lang.String)
+  Then the response status should be 200       # api.steps.UserStepDefinitions.theResponseStatusShouldBe(int)
+[CHECK] User successfully deleted.
+  And the user should no longer exist          # api.steps.UserStepDefinitions.theUserShouldNoLongerExist()
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
